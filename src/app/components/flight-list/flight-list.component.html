@@ -12,7 +12,7 @@
     </div>
 
     <ul class="list-group some-margin-top">
-        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue" [flightHover]="ignore">
+        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue">
             <!-- 
                 Structural directive will display the Delta flag if the flight is being
                 carried out by Delta
@@ -22,12 +22,18 @@
             </p>
 
             <div>
-                <flight-detail [flight]="flight"></flight-detail>
-                <button [disabled]="flight.isFull" class="btn btn-primary" (click)="enableBooking(flight.id)">{{flight.isBooking ? 'Cancel booking' : 'Book this flight'}}</button>
+                <flight-detail [flight]="flight" [locale]="selectedValue"></flight-detail>
+                <!-- 
+                    Here we use a ternary operator to display a different values
+                    depending on the flight.isBooking property.
+                 -->
+                <button flightHover [disabled]="flight.isFull" class="btn btn-primary" (click)="enableBooking(flight.id)">
+                    {{flight.isBooking ? 'Cancel booking' : 'Book this flight'}}
+                </button>
             </div>
 
-            <!-- form component -->
             <div class="some-margin-top">
+                <!-- Don't show the form if the flight is in booking mode or is full -->
                 <div [hidden]="!flight.isBooking || flight.isFull">
                     <passenger-form (onAddPassenger)="addPassenger($event, flight.id)"></passenger-form>
                 </div>

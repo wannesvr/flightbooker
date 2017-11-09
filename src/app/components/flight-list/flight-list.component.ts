@@ -17,6 +17,7 @@ import { Passenger } from '../../model/Passenger';
 })
 export class FlightListComponent implements OnInit {
     
+    public selectedValue: string = 'en-US';
     public flights: Flight[];
 
     public constructor(private service: FlightService) {

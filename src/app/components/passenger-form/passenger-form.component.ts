@@ -8,7 +8,8 @@ import { Passenger } from '../../model/Passenger';
  */
 @Component({
     selector: 'passenger-form',
-    templateUrl: 'passenger-form.component.html'
+    templateUrl: 'passenger-form.component.html',
+    styleUrls: ['passenger-form.component.css']
 })
 
 export class PassengerFormComponent {

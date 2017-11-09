@@ -1,13 +1,3 @@
-.some-margin-top {
-    display: block;
-    margin-top: 1em;
-}
-
 .some-padding {
     padding: 1em;
-}
-
-table.borderless td,
-table.borderless th {
-    border: none !important;
 }

@@ -10,8 +10,8 @@
     <tr>
         <td class=" col-md-3 ">{{flight.from}}</td>
         <td>{{flight.to}}</td>
-        <td class="col-md-2">{{flight.price | currency: 'EUR':'symbol':'3.2-2':selectedValue}}</td>
-        <td class="col-md-2">{{flight.date | date: 'shortDate':'':selectedValue}}</td>
+        <td class="col-md-2">{{flight.price | currency: 'EUR':'symbol':'3.2-2':locale}}</td>
+        <td class="col-md-2">{{flight.date | date: 'shortDate':'':locale}}</td>
         <td id="flightSeatsLeft_{{flight.id}}">{{flight.seatsLeft}}</td>
     </tr>
 </table>
