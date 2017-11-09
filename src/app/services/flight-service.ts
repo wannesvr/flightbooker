@@ -1,6 +1,8 @@
 import { Flight } from "../model/Flight";
 import { AirplaneType } from "../model/AirplaneType";
+import { Injectable } from "@angular/core";
 
+@Injectable()
 export class FlightService {
     getFlights() : Flight[] {
         let flights:Flight[] = [];

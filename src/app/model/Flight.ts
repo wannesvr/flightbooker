@@ -1,6 +1,9 @@
 import { AirplaneType } from "./AirplaneType";
 import { Passenger } from "./Passenger";
 
+/**
+ * Class that holds information about a flight and provides a method to add a passenger to the flight.
+ */
 export class Flight {
     private static ID = 0;
 
@@ -32,6 +35,10 @@ export class Flight {
         }
     }
 
+    /**
+     * Adds a passenger to the flight if it is in booking mode and is not full.
+     * @param passenger The passenger to add
+     */
     public addPassenger(passenger: Passenger): void {
         if (this.isBooking && !this.isFull) {
             this.passengers.push(passenger);

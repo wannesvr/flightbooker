@@ -12,7 +12,15 @@
     </div>
 
     <ul class="list-group some-margin-top">
-        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue">
+        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue" [flightHover]="ignore">
+            <!-- 
+                Structural directive will display the Delta flag if the flight is being
+                carried out by Delta
+            -->
+            <p *showFlag="flight.name">
+                <img style="width: 30px; height: 30px;" src="../../../assets/delta.png" alt="">
+            </p>
+
             <div>
                 <flight-detail [flight]="flight"></flight-detail>
                 <button [disabled]="flight.isFull" class="btn btn-primary" (click)="enableBooking(flight.id)">{{flight.isBooking ? 'Cancel booking' : 'Book this flight'}}</button>
