@@ -1,0 +1,33 @@
+<!-- Detail component -->
+<h2>{{flight.name}}</h2>
+<table class="table borderless">
+    <tr>
+        <th class="col-md-3">From</th>
+        <th>To</th>
+        <th class="col-md-2">Price</th>
+        <th class="col-md-2">Date</th>
+        <th>Seats left</th>
+    </tr>
+    <tr>
+        <td class=" col-md-3 ">{{flight.from}}</td>
+        <td>{{flight.to}}</td>
+        <td class="col-md-2">{{flight.price | currency: 'EUR':'symbol':'3.2-2':selectedValue}}</td>
+        <td class="col-md-2">{{flight.date | date: 'shortDate':'':selectedValue}}</td>
+        <td id="flightSeatsLeft_{{flight.id}}">{{flight.seatsLeft}}</td>
+    </tr>
+</table>
+
+<div [hidden]="flight.passengers.length === 0">
+    <h4>Passengers</h4>
+    <table class="table">
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+        </tr>
+
+        <tr id="passenger_{{passenger.id}}" *ngFor="let passenger of flight.passengers;">
+            <td>{{passenger.firstName}}</td>
+            <td>{{passenger.lastName}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,29 @@
+<div class="some-padding">
+    <div>
+        <label class="some-margin-top" for="search">Search a flight</label>
+        <input class="form-control" id="search" type="text" [(ngModel)]="searchValue">
+
+        <label class="some-margin-top" for="localeSelect">Choose locale</label>
+        <select class="form-control" id="localeSelect" name="localeSelect" [(ngModel)]="selectedValue">
+            <option value="en-US">US</option>
+            <option value="fr-FR">France</option>
+            <option value="nl-NL">Netherlands</option>
+        </select>
+    </div>
+
+    <ul class="list-group some-margin-top">
+        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue">
+            <div>
+                <flight-detail [flight]="flight"></flight-detail>
+                <button [disabled]="flight.isFull" class="btn btn-primary" (click)="enableBooking(flight.id)">{{flight.isBooking ? 'Cancel booking' : 'Book this flight'}}</button>
+            </div>
+
+            <!-- form component -->
+            <div class="some-margin-top">
+                <div [hidden]="!flight.isBooking || flight.isFull">
+                    <passenger-form (onAddPassenger)="addPassenger($event, flight.id)"></passenger-form>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
