@@ -5,8 +5,7 @@ import { FlightCancelComponent } from "./components/flight-cancel-form/flight-ca
 const routes: Route[] = [
     { path: '', redirectTo: 'flights', pathMatch: 'full' },
     { path: 'flights', component: FlightListComponent },
-    { path: 'flights/cancel/:flightId/:passengerId', component: FlightCancelComponent },
-    { path: 'zone',  component: NgZoneDemo },
+    { path: 'flights/cancel/:flightId/:passengerId', component: FlightCancelComponent }
 ]
 
 export default routes;
