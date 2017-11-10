@@ -1,3 +1,6 @@
-<h1>Welcome to Angular Flightbooker</h1>
+<h1>{{ 'TITLE' | translate }}</h1>
 
-<flight-list-component></flight-list-component>
+<button class="btn" (click)="changeLanguage()">{{'LANGUAGE' | translate | uppercase}}</button>
+
+<!-- <flight-list-component></flight-list-component> -->
+<router-outlet></router-outlet>

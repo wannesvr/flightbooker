@@ -34,15 +34,4 @@ export class Flight {
             case AirplaneType.Boeing_747: this.seatsLeft = 6; break;
         }
     }
-
-    /**
-     * Adds a passenger to the flight if it is in booking mode and is not full.
-     * @param passenger The passenger to add
-     */
-    public addPassenger(passenger: Passenger): void {
-        if (this.isBooking && !this.isFull) {
-            this.passengers.push(passenger);
-            this.isFull = --this.seatsLeft === 0;
-        }
-    }
 }

@@ -1,9 +1,9 @@
 <div class="some-padding">
     <div>
-        <label class="some-margin-top" for="search">Search a flight</label>
-        <input class="form-control" id="search" type="text" [(ngModel)]="searchValue">
+        <label class="some-margin-top" for="search">{{ 'SEARCH_FLIGHT' | translate }}</label>
+        <input class="form-control" id="search" type="text" [formControl]="searchInput">
 
-        <label class="some-margin-top" for="localeSelect">Choose locale</label>
+        <label class="some-margin-top" for="localeSelect">{{ 'CHOOSE_LANGUAGE' | translate }}</label>
         <select class="form-control" id="localeSelect" name="localeSelect" [(ngModel)]="selectedValue">
             <option value="en-US">US</option>
             <option value="fr-FR">France</option>
@@ -22,7 +22,7 @@
             </p>
 
             <div>
-                <flight-detail [flight]="flight" [locale]="selectedValue"></flight-detail>
+                <flight-detail [flight]="flight"></flight-detail>
                 <!-- 
                     Here we use a ternary operator to display a different values
                     depending on the flight.isBooking property.

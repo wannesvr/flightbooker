@@ -1,0 +1,8 @@
+<h1>Cancel booking</h1>
+
+<p>Are you sure you want to cancel your booking?</p>
+
+<button class="btn btn-primary" (click)="_cancelBooking()">YES</button>
+<button class="btn btn-primary" (click)="_navigateBack()">NO</button>
+
+<div *ngIf="errorMessage">{{errorMessage}}</div>

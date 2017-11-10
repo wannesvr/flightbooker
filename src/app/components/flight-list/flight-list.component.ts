@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { Flight } from '../../model/Flight';
 import { AirplaneType } from '../../model/AirplaneType';
 import { FlightService } from '../../services/flight-service';
 import { Passenger } from '../../model/Passenger';
+import { FormBuilder, FormControl } from '@angular/forms';
+
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/debounceTime';
 
 /**
  * List-component that has a list of flights
@@ -16,11 +20,24 @@ import { Passenger } from '../../model/Passenger';
     styleUrls: ['flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
-    
-    public selectedValue: string = 'en-US';
+    public searchObservable: Observable<number>;
+
+    public searchInput: FormControl;
+    public searchValue: string;
+    public foundFlights: number;
+
+    public selectedValue: string;
     public flights: Flight[];
 
-    public constructor(private service: FlightService) {
+    public constructor(private service: FlightService, private formBuilder: FormBuilder) {
+        this.searchInput = new FormControl();
+        this.searchInput.valueChanges.debounceTime(400).subscribe(input => {
+            this.searchValue = input;
+
+            this.searchObservable = this.service.searchFlights(input).map(result => {
+               return result.length;
+            });
+        });
     }
 
     /**
@@ -30,7 +47,9 @@ export class FlightListComponent implements OnInit {
      * while ngOnInit has to be called manually there.
      */
     ngOnInit(): void {
-        this.flights = this.service.getFlights();
+        this.service.getFlights().subscribe(flights => {
+            this.flights = flights;
+        });
     }
 
     /**
@@ -38,7 +57,7 @@ export class FlightListComponent implements OnInit {
      * @param flightId The id of the flight you want to enable booking for
      */
     enableBooking(flightId: number): void {
-        const flightToBook:Flight = this.flights.filter((flight) => flight.id === flightId)[0];
+        const flightToBook:Flight | undefined = this.flights.find(flight => flight.id === flightId);
 
         if (flightToBook) {
             flightToBook.isBooking = ! flightToBook.isBooking;
@@ -46,14 +65,19 @@ export class FlightListComponent implements OnInit {
     }
 
     /**
-     * Adds a passenger to a flight.
+     * Adds a passenger to the flight if it is in booking mode and is not full.
      * @param passenger The passenger to add
      * @param flightId The id of the flight you want to add the passenger to
      */
     addPassenger(passenger: Passenger, flightId: number): void {
-        const flightToBook:Flight = this.flights.filter((flight) => flight.id === flightId)[0];
+        let flight:Flight = this.flights.filter((flight) => flight.id === flightId)[0];
         
-        flightToBook.addPassenger(passenger);
-        flightToBook.isBooking = false;
+        if (flight.isBooking && !flight.isFull) {
+            flight.passengers.push(passenger);
+            flight.isFull = --flight.seatsLeft === 0;
+            flight.isBooking = false;
+
+            this.service.updateFlight(flight).subscribe(response => flight = response);
+        }
     }
 }

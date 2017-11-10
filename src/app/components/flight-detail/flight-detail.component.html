@@ -1,11 +1,11 @@
 <h2>{{flight.name}}</h2>
 <table class="table borderless">
     <tr>
-        <th class="col-md-3">From</th>
-        <th>To</th>
-        <th class="col-md-2">Price</th>
-        <th class="col-md-2">Date</th>
-        <th>Seats left</th>
+        <th class="col-md-3">{{ 'FROM' | translate}}</th>
+        <th>{{ 'TO' | translate}}</th>
+        <th class="col-md-2">{{ 'PRICE' | translate}}</th>
+        <th class="col-md-2">{{ 'DATE' | translate}}</th>
+        <th>{{ 'SEATS_LEFT' | translate}}</th>
     </tr>
     <tr>
         <td class=" col-md-3 ">{{flight.from}}</td>
@@ -22,11 +22,13 @@
         <tr>
             <th>First name</th>
             <th>Last name</th>
+            <th></th>
         </tr>
 
         <tr id="passenger_{{passenger.id}}" *ngFor="let passenger of flight.passengers;">
             <td>{{passenger.firstName}}</td>
             <td>{{passenger.lastName}}</td>
+            <td><button class="btn btn-primary btn-xs" (click)="_cancelBooking(passenger.id)">Cancel booking</button></td>
         </tr>
     </table>
 </div>

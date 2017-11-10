@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Flight } from '../../model/Flight';
+import { Router } from '@angular/router';
+import { AppComponent } from '../../app.component';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 
 /**
@@ -9,13 +12,17 @@ import { Flight } from '../../model/Flight';
     selector: 'flight-detail',
     templateUrl: 'flight-detail.component.html'
 })
-export class FlightDetailComponent implements OnInit {
+export class FlightDetailComponent {
     // This component expects a flight as input
     // <flight-detail [flight]="myFlight"></flight-detail>
     @Input() flight: Flight;
-    @Input() locale: string;
+    locale: string;
 
-    constructor() { }
+    constructor(private router: Router) {
+        AppComponent.localeObservable.subscribe((locale) => this.locale = locale);
+    }
 
-    ngOnInit() { }
+    _cancelBooking(passengerId: number) {
+        this.router.navigate(['/flights/cancel', this.flight.id, passengerId]);
+    }
 }

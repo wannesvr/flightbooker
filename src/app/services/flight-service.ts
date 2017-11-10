@@ -1,17 +1,34 @@
 import { Flight } from "../model/Flight";
 import { AirplaneType } from "../model/AirplaneType";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { HttpClient } from "@angular/common/http";
+
+import 'rxjs/add/operator/map';
 
 @Injectable()
-export class FlightService {
-    getFlights() : Flight[] {
-        let flights:Flight[] = [];
+export class FlightService { 
 
-        flights.push(new Flight('Brussels Airlines', 'Zaventem', 'Istanbul', 500, AirplaneType.Airbus_A380));
-        flights.push(new Flight('Brussels Airlines', 'Zaventem', 'London', 100, AirplaneType.Airbus_A320));
-        flights.push(new Flight('Delta', 'New York', 'Manhattan', 150, AirplaneType.Boeing_737));
-        flights.push(new Flight('Lufthansa', 'Tokyo', 'Charleroi', 600, AirplaneType.Boeing_747));
-        
-        return flights;
+    constructor(private http:HttpClient) {
+
+    }
+
+    getFlights() : Observable<Flight[]> {
+        return this.http.get<Flight[]>('http://localhost:3000/flights');
+    }
+
+    searchFlights(searchValue: string) : Observable<Flight[]> {
+        return this.http.get<Flight[]>('http://localhost:3000/flights')
+            .map((flights) => {
+                return flights.filter(flight => flight.name.toLowerCase().indexOf(searchValue.toLowerCase()) > - 1);
+            });
+    } 
+
+    updateFlight(flight: Flight) : Observable<Flight> {
+        return this.http.put<Flight>(`http://localhost:3000/flights/${flight.id}`, flight, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
 }

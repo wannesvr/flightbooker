@@ -8,8 +8,7 @@ import { Passenger } from '../../model/Passenger';
  */
 @Component({
     selector: 'passenger-form',
-    templateUrl: 'passenger-form.component.html',
-    styleUrls: ['passenger-form.component.css']
+    templateUrl: 'passenger-form.component.html'
 })
 
 export class PassengerFormComponent {
@@ -45,6 +44,7 @@ export class PassengerFormComponent {
             const passenger: Passenger = new Passenger(firstName, lastName);
           
             this.onAddPassenger.emit(passenger);
+            this.form.reset();
         } 
     }
 }
