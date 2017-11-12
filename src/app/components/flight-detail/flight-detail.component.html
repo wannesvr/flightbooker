@@ -1,34 +1,36 @@
-<h2>{{flight.name}}</h2>
-<table class="table borderless">
-    <tr>
-        <th class="col-md-3">{{ 'FROM' | translate}}</th>
-        <th>{{ 'TO' | translate}}</th>
-        <th class="col-md-2">{{ 'PRICE' | translate}}</th>
-        <th class="col-md-2">{{ 'DATE' | translate}}</th>
-        <th>{{ 'SEATS_LEFT' | translate}}</th>
-    </tr>
-    <tr>
-        <td class=" col-md-3 ">{{flight.from}}</td>
-        <td>{{flight.to}}</td>
-        <td class="col-md-2">{{flight.price | currency: 'EUR':'symbol':'3.2-2':locale}}</td>
-        <td class="col-md-2">{{flight.date | date: 'shortDate':'':locale}}</td>
-        <td id="flightSeatsLeft_{{flight.id}}">{{flight.seatsLeft}}</td>
-    </tr>
-</table>
+<h2 class="some-padding-bottom">{{flight.name}}</h2>
+
+<div class="container some-more-padding-bottom">
+    <div class="row">
+        <div class="col-md-2 bold">{{ 'FROM' | translate}}</div>
+        <div class="col-md-2 bold">{{ 'TO' | translate}}</div>
+        <div class="col-md-2 bold">{{ 'PRICE' | translate}}</div>
+        <div class="col-md-2 bold">{{ 'DATE' | translate}}</div>
+        <div class="col-md-2 bold">{{ 'SEATS_LEFT' | translate}}</div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-2 larger-font">{{flight.from}}</div>
+        <div class="col-md-2 larger-font">{{flight.to}}</div>
+        <div class="col-md-2">{{flight.price | currency: 'EUR':'symbol':'3.2-2':locale}}</div>
+        <div class="col-md-2">{{flight.date | date: 'shortDate':'':locale}}</div>
+        <div class="col-md-2" id="flightSeatsLeft_{{flight.id}}">{{flight.seatsLeft}}</div>
+    </div>
+</div>
 
 <div [hidden]="flight.passengers.length === 0">
-    <h4>Passengers</h4>
-    <table class="table">
-        <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th></th>
-        </tr>
+    <div class="container">
+        <h4>Passengers</h4>
+        <div class="row">
+            <div class="col-md-2 bold">{{ 'FIRST_NAME' | translate}}</div>
+            <div class="col-md-2 bold">{{ 'LAST_NAME' | translate}}</div>
+            <div class="col-md-8 bold"></div>
+        </div>
+        <div *ngFor="let passenger of flight.passengers;" id="passenger_{{passenger.id}}" class="row a-little-bit-padding">
+            <div class="col-md-2 table-row-height">{{passenger.firstName}}</div>
+            <div class="col-md-2 table-row-height">{{passenger.lastName}}</div>
+            <div class="col-md-8 table-row-height"><button class="btn btn-danger btn-xs" (click)="_cancelBooking(passenger.id)">{{ 'CANCEL_BOOKING' | translate}}</button></div>
+        </div>
+    </div>
 
-        <tr id="passenger_{{passenger.id}}" *ngFor="let passenger of flight.passengers;">
-            <td>{{passenger.firstName}}</td>
-            <td>{{passenger.lastName}}</td>
-            <td><button class="btn btn-primary btn-xs" (click)="_cancelBooking(passenger.id)">Cancel booking</button></td>
-        </tr>
-    </table>
 </div>

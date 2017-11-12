@@ -1,8 +1,8 @@
-<h1>Cancel booking</h1>
+<h1>{{ 'CANCEL_BOOKING' | translate }}</h1>
 
-<p>Are you sure you want to cancel your booking?</p>
+<p>{{ 'SURE_CANCEL_BOOKING' | translate }}</p>
 
-<button class="btn btn-primary" (click)="_cancelBooking()">YES</button>
-<button class="btn btn-primary" (click)="_navigateBack()">NO</button>
+<button class="btn btn-primary" (click)="_cancelBooking()">{{ 'YES' | translate | uppercase}}</button>
+<button class="btn btn-primary" (click)="_navigateBack()">{{ 'NO' | translate | uppercase}}</button>
 
 <div *ngIf="errorMessage">{{errorMessage}}</div>

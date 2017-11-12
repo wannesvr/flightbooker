@@ -9,10 +9,10 @@ import { FlightListComponent } from "./flight-list.component";
 import { FlightDetailComponent } from "../flight-detail/flight-detail.component";
 import { FlightSearchPipe } from "../../pipes/flight-search.pipe";
 import { FlightService } from "../../services/flight-service";
-import { Flight } from "../../model/Flight";
+import { Flight } from "../../model/flight";
 import { PassengerFormComponent } from "../passenger-form/passenger-form";
-import { AirplaneType } from "../../model/AirplaneType";
-import { Passenger } from "../../model/Passenger";
+import { AirplaneType } from "../../model/airplane-type";
+import { Passenger } from "../../model/passenger";
 
 import { MockFlightService } from "../../services/mocks/flight-service.mock";
 

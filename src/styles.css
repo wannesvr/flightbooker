@@ -3,3 +3,31 @@
 .some-margin-top {
     margin-top: 1em;
 }
+
+.some-margin-bottom {
+    margin-bottom: 1em;
+}
+
+.some-padding-bottom {
+    padding-bottom: 1em;
+}
+
+.some-more-padding-bottom {
+    padding-bottom: 2em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.larger-font {
+    font-size: 1.2em;
+}
+
+.button-height {
+    height: 35px;
+}
+
+.a-little-bit-padding {
+    padding: 0.2em;
+}

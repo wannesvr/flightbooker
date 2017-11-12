@@ -7,5 +7,14 @@
     "TO": "Naar",
     "PRICE": "Prijs",
     "DATE": "Datum",
-    "SEATS_LEFT": "Beschikbare stoelen"
+    "SEATS_LEFT": "Beschikbare stoelen",
+    "BOOK_FLIGHT": "Vlucht boeken",
+    "CANCEL_BOOKING": "Annuleer mijn boeking",
+    "FIRST_NAME": "Voornaam",
+    "LAST_NAME": "Achternaam",
+    "TAP_TO_SAVE": "Opslaan",
+    "FILL_ALL_FIELDS": "Vul alle velden in",
+    "SURE_CANCEL_BOOKING": "Weet je zeker dat je je boeking wilt annuleren?",
+    "YES": "Ja",
+    "NO": "Nee"
 }

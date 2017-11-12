@@ -1,6 +1,6 @@
 import { FlightService } from './flight-service';
-import { Flight } from '../model/Flight';
-import { AirplaneType } from '../model/AirplaneType';
+import { Flight } from '../model/flight';
+import { AirplaneType } from '../model/airplane-type';
 
 describe('FlightService', () => {
     let service: FlightService;

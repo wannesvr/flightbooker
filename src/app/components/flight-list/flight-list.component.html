@@ -1,14 +1,7 @@
 <div class="some-padding">
     <div>
-        <label class="some-margin-top" for="search">{{ 'SEARCH_FLIGHT' | translate }}</label>
+        <label class="some-margin-top" for="search">{{ 'SEARCH_FLIGHT' | translate }} <span *ngIf="searchValue">({{foundFlights}} results)</span></label>
         <input class="form-control" id="search" type="text" [formControl]="searchInput">
-
-        <label class="some-margin-top" for="localeSelect">{{ 'CHOOSE_LANGUAGE' | translate }}</label>
-        <select class="form-control" id="localeSelect" name="localeSelect" [(ngModel)]="selectedValue">
-            <option value="en-US">US</option>
-            <option value="fr-FR">France</option>
-            <option value="nl-NL">Netherlands</option>
-        </select>
     </div>
 
     <ul class="list-group some-margin-top">
@@ -27,8 +20,8 @@
                     Here we use a ternary operator to display a different values
                     depending on the flight.isBooking property.
                  -->
-                <button flightHover [disabled]="flight.isFull" class="btn btn-primary" (click)="enableBooking(flight.id)">
-                    {{flight.isBooking ? 'Cancel booking' : 'Book this flight'}}
+                <button flightHover [disabled]="flight.isFull" class="btn btn-primary some-margin-top" (click)="enableBooking(flight.id)">
+                    {{(flight.isBooking ? 'CANCEL_BOOKING' : 'BOOK_FLIGHT') | translate}}
                 </button>
             </div>
 

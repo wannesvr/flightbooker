@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Passenger } from '../../model/Passenger';
+import { Passenger } from '../../model/passenger';
 
 /**
  * A component that displays a form with some validation to the user 

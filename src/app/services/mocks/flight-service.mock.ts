@@ -1,5 +1,5 @@
-import { Flight } from "../../model/Flight";
-import { AirplaneType } from "../../model/AirplaneType";
+import { Flight } from "../../model/flight";
+import { AirplaneType } from "../../model/airplane-type";
 
 export class MockFlightService {
     getFlights(): Flight[] {

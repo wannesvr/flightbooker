@@ -1,10 +1,10 @@
 <form (ngSubmit)="addPassenger()" [formGroup]="form">
-    <label for="inputField">Firstname</label>
+    <label for="inputField">{{ 'FIRST_NAME' | translate}}</label>
     <input class="form-control" type="text" formControlName="firstName">
 
-    <label for="inputField">Last name</label>
+    <label for="inputField">{{ 'LAST_NAME' | translate}}</label>
     <input class="form-control" type="text" formControlName="lastName">
 
-    <button class="btn btn-primary some-margin-top" [disabled]="!form.valid">Tap to save</button>
-    <p class="alert alert-warning some-margin-top" [hidden]="form.valid">Please fill in all fields</p>
+    <button class="btn btn-primary some-margin-top" [disabled]="!form.valid">{{ 'TAP_TO_SAVE' | translate}}</button>
+    <p class="alert alert-warning some-margin-top" [hidden]="form.valid">{{ 'FILL_ALL_FIELDS' | translate}}</p>
 </form>

@@ -1,9 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { Flight } from '../../model/Flight';
-import { AirplaneType } from '../../model/AirplaneType';
+import { Flight } from '../../model/flight';
+import { AirplaneType } from '../../model/airplane-type';
 import { FlightService } from '../../services/flight-service';
-import { Passenger } from '../../model/Passenger';
+import { Passenger } from '../../model/passenger';
 import { FormBuilder, FormControl } from '@angular/forms';
 
 import { Observable } from 'rxjs/Rx';
@@ -20,22 +20,35 @@ import 'rxjs/add/operator/debounceTime';
     styleUrls: ['flight-list.component.css']
 })
 export class FlightListComponent implements OnInit {
-    public searchObservable: Observable<number>;
-
+    /**
+     * The FormControl for the search field.
+     */
     public searchInput: FormControl;
-    public searchValue: string;
-    public foundFlights: number;
 
-    public selectedValue: string;
+    /**
+     * The value the user is searching for.
+     */
+    public searchValue: string;
+
+    /**
+     * The amount of flights that were found matching the user's search input.
+     */
+    public foundFlights: number = 0;
     public flights: Flight[];
 
     public constructor(private service: FlightService, private formBuilder: FormBuilder) {
         this.searchInput = new FormControl();
-        this.searchInput.valueChanges.debounceTime(400).subscribe(input => {
-            this.searchValue = input;
 
-            this.searchObservable = this.service.searchFlights(input).map(result => {
-               return result.length;
+        /**
+         * Subscribe to the valueChanges observer of the search form control.
+         * By using debounceTime we limit the amount of calls to the webserver by saying only 
+         * continue when nothing has changed for 400ms. The user has to stop typing for 400ms before
+         * the call to the service is made.
+         */
+        this.searchInput.valueChanges.debounceTime(400).subscribe(input => {
+            this.service.searchFlights(input).subscribe(result => {
+                this.searchValue = input;
+                this.foundFlights = result.length;
             });
         });
     }
@@ -57,10 +70,10 @@ export class FlightListComponent implements OnInit {
      * @param flightId The id of the flight you want to enable booking for
      */
     enableBooking(flightId: number): void {
-        const flightToBook:Flight | undefined = this.flights.find(flight => flight.id === flightId);
+        const flightToBook: Flight | undefined = this.flights.find(flight => flight.id === flightId);
 
         if (flightToBook) {
-            flightToBook.isBooking = ! flightToBook.isBooking;
+            flightToBook.isBooking = !flightToBook.isBooking;
         }
     }
 
@@ -70,8 +83,8 @@ export class FlightListComponent implements OnInit {
      * @param flightId The id of the flight you want to add the passenger to
      */
     addPassenger(passenger: Passenger, flightId: number): void {
-        let flight:Flight = this.flights.filter((flight) => flight.id === flightId)[0];
-        
+        let flight: Flight = this.flights.filter((flight) => flight.id === flightId)[0];
+
         if (flight.isBooking && !flight.isFull) {
             flight.passengers.push(passenger);
             flight.isFull = --flight.seatsLeft === 0;

@@ -14,10 +14,10 @@ import 'rxjs/add/operator/map'
 
 export class FlightCancelComponent implements OnInit {
     private flightId: number;
-    private passengerId: number; 
+    private passengerId: number;
     private errorMessage: string;
 
-    constructor(private service: FlightService, private route:ActivatedRoute, private router: Router) { }
+    constructor(private service: FlightService, private route: ActivatedRoute, private router: Router) { }
 
     ngOnInit() {
         this.route.params.subscribe(value => {
@@ -29,23 +29,32 @@ export class FlightCancelComponent implements OnInit {
     _cancelBooking() {
         this.service.getFlights().subscribe(
             flights => {
-                const flight: Flight | undefined = flights.find(f => f.id == this.flightId);
+                let flight: Flight | undefined = flights.find(f => f.id == this.flightId);
 
                 if (flight) {
-                    const passengerIndex: number = flight.passengers.findIndex(p => p.id == this.passengerId);
+                    const copyFlight = Flight.copy(flight);
+
+                    const passengerIndex: number = copyFlight.passengers.findIndex(p => p.id == this.passengerId);
 
                     if (passengerIndex > -1) {
-                        flight.passengers.splice(passengerIndex, 1);
+                        const passenger = copyFlight.passengers.splice(passengerIndex, 1);
+                        ++copyFlight.seatsLeft;
+                        copyFlight.isFull = false;
 
-                        this.service.updateFlight(flight).subscribe(
-                            succes => this._navigateBack(),
-                            error => this.errorMessage = 'Cancel request failed.'
+                        this.service.updateFlight(copyFlight).subscribe(
+                            succes => {
+                                flight = copyFlight;
+                                this._navigateBack();
+                            },
+                            error => {
+                                this.errorMessage = 'Cancel request failed.';
+                            }
                         );
                     } else {
                         this.errorMessage = `No passenger with id ${this.passengerId} found for the flight to ${flight.to}.`;
                     }
                 } else {
-                    this.errorMessage = `No flight with id ${this.passengerId} found.`;
+                    this.errorMessage = `No flight with id ${this.flightId} found.`;
                 }
             });
     }

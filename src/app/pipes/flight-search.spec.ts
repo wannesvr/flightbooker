@@ -1,6 +1,6 @@
 import { FlightSearchPipe } from "./flight-search.pipe";
-import { Flight } from "../model/Flight";
-import { AirplaneType } from "../model/AirplaneType";
+import { Flight } from "../model/flight";
+import { AirplaneType } from "../model/airplane-type";
 
 describe('FlightSearchPipe', () => {
     let pipe: FlightSearchPipe;
