@@ -1,0 +1,68 @@
+{
+    "flights": [{
+            "name": "Delta",
+            "from": "New York",
+            "to": "Manhattan",
+            "price": 150,
+            "airplaneType": 2,
+            "id": 1,
+            "date": "2017-11-09T15:57:16.298Z",
+            "isBooking": false,
+            "isFull": false,
+            "passengers": [],
+            "seatsLeft": 4
+        },
+        {
+            "name": "Brussels Airlines",
+            "from": "Zaventem",
+            "to": "London",
+            "price": 100,
+            "airplaneType": 0,
+            "id": 2,
+            "passengers": [],
+            "isFull": false,
+            "isBooking": false,
+            "date": "2017-11-09T15:57:16.298Z",
+            "seatsLeft": 3
+        },
+        {
+            "name": "Lufthansa",
+            "from": "Tokyo",
+            "to": "Charleroi",
+            "price": 600,
+            "airplaneType": 3,
+            "id": 3,
+            "passengers": [],
+            "isFull": true,
+            "isBooking": false,
+            "date": "2017-11-09T15:57:16.298Z",
+            "seatsLeft": 0
+        },
+        {
+            "name": "KLM",
+            "from": "Amsterdam",
+            "to": "Bergen",
+            "price": 125,
+            "airplaneType": 2,
+            "id": 4,
+            "passengers": [],
+            "isFull": false,
+            "isBooking": false,
+            "date": "2017-11-09T15:57:16.298Z",
+            "seatsLeft": 4
+        },
+        {
+            "name": "Ryanair",
+            "from": "Zaventem",
+            "to": "Malaga",
+            "price": 30,
+            "airplaneType": 2,
+            "id": 5,
+            "date": "2017-11-09T15:57:16.298Z",
+            "isBooking": false,
+            "isFull": false,
+            "passengers": [],
+            "seatsLeft": 1
+        }
+    ]
+}

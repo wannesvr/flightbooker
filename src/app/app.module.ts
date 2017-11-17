@@ -5,8 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import routes from './app-routes';
-
 // Imports for my components
 import { AppComponent } from './app.component';
 import { FlightListComponent } from './components/flight-list/flight-list.component';
@@ -47,7 +45,12 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule, FormsModule,
     ReactiveFormsModule, HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot([
+      { path: '', redirectTo: 'flights', pathMatch: 'full' }, // Redirect empty path to flights
+      { path: 'flights', component: FlightListComponent },
+      { path: 'flights/cancel/:flightId/:passengerId', component: FlightCancelComponent },
+      { path: '**', redirectTo: 'flights' } // Redirect all other pages to flights
+    ]),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

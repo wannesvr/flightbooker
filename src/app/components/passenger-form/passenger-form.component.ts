@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Passenger } from '../../model/passenger';
 
@@ -14,6 +14,7 @@ import { Passenger } from '../../model/passenger';
 export class PassengerFormComponent {
     // EventEmitter will allow us to fire an event upwards to the parent component(s).
     @Output() public onAddPassenger: EventEmitter<Passenger>;
+    @Input() public flightId: number;
      
     public form: FormGroup;
 

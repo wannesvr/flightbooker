@@ -5,7 +5,7 @@
     </div>
 
     <ul class="list-group some-margin-top" *ngIf="flights">
-        <li class="list-group-item" *ngFor="let flight of flights | search:searchValue">
+        <li id="flight_{{flight.id}}" class="list-group-item" *ngFor="let flight of flights | search:searchValue">
             <!-- 
                 Structural directive will display the Delta flag if the flight is being
                 carried out by Delta
