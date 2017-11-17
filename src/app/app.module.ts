@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-//import routes from './app-routes';
+import routes from './app-routes';
 
 // Imports for my components
 import { AppComponent } from './app.component';
@@ -23,8 +23,8 @@ import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import localeNl from '@angular/common/locales/nl';
 
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeNl);
@@ -35,24 +35,19 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,  
-    FlightSearchPipe, 
+    AppComponent,
+    FlightSearchPipe,
     FlightListComponent,
     FlightDetailComponent,
     PassengerFormComponent,
     FlightHoverDirective,
     ShowFlagDirective,
     FlightCancelComponent
-    ],
+  ],
   imports: [
-    BrowserModule, FormsModule, 
-    ReactiveFormsModule, HttpClientModule, 
-    RouterModule.forRoot([
-      { path: '', redirectTo: 'flights', pathMatch: 'full' },
-      { path: 'flights', component: FlightListComponent },
-      { path: 'flights/cancel/:flightId/:passengerId', component: FlightCancelComponent },
-      { path: '**', redirectTo: 'flights'}
-  ]),
+    BrowserModule, FormsModule,
+    ReactiveFormsModule, HttpClientModule,
+    RouterModule.forRoot(routes),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

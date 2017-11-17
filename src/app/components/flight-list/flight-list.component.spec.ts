@@ -1,26 +1,35 @@
 import { ComponentFixture, async, TestBed, inject } from "@angular/core/testing";
-import { DebugElement, Injector } from "@angular/core";
+import { DebugElement, Injector, NO_ERRORS_SCHEMA } from "@angular/core";
 import { By } from "@angular/platform-browser";
-import { NO_ERRORS_SCHEMA } from "@angular/compiler/src/core";
 
+import { APP_BASE_HREF } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
 import { FlightListComponent } from "./flight-list.component";
 import { FlightDetailComponent } from "../flight-detail/flight-detail.component";
 import { FlightSearchPipe } from "../../pipes/flight-search.pipe";
 import { FlightService } from "../../services/flight-service";
 import { Flight } from "../../model/flight";
-import { PassengerFormComponent } from "../passenger-form/passenger-form";
+import { PassengerFormComponent } from "../passenger-form/passenger-form.component";
 import { AirplaneType } from "../../model/airplane-type";
 import { Passenger } from "../../model/passenger";
+import { FlightCancelComponent } from "../flight-cancel-form/flight-cancel-component";
+import { FlightHoverDirective } from "../../directives/flight-hover.directive";
+import { ShowFlagDirective } from "../../directives/show-flag.directive";
 
-import { MockFlightService } from "../../services/mocks/flight-service.mock";
+import { TranslateService, TranslatePipe, TranslateModule, TranslateLoader } from "@ngx-translate/core";
+
+import { TranslateLoaderMock } from "../../mocks/translate/translate-fake-loader";
+import { FlightServiceMock } from "../../services/mocks/flight-service.mock";
+import { TranslateServiceMock } from "../../mocks/translate/translate-mock.service";
+import { Observable } from "rxjs/Observable";
 
 describe('FlightListComponent', () => {
     let fixture: ComponentFixture<FlightListComponent>;
     let component: FlightListComponent;
     let service: FlightService;
-    
+
     beforeEach(async(() => {
         /**
          * Create a testing module for the flight-list component
@@ -32,25 +41,45 @@ describe('FlightListComponent', () => {
             declarations: [
                 FlightListComponent,
                 FlightDetailComponent,
+                FlightCancelComponent,
                 FlightSearchPipe,
                 PassengerFormComponent,
+                FlightHoverDirective,
+                ShowFlagDirective,
             ],
             imports: [
-                FormsModule, ReactiveFormsModule
+                FormsModule, 
+                ReactiveFormsModule, 
+                RouterModule.forRoot([]),
+                //Make the TranslateModule use our TranslateLoaderMock
+                TranslateModule.forRoot({
+                    loader: {
+                      provide: TranslateLoader,
+                      useClass: TranslateLoaderMock
+                    }
+                  })
             ],
-          
-            providers: [{
-                provide: FlightService,
-                useFactory: () => {
-                    return new MockFlightService()
+
+            providers: [
+                // Mock the FlightService
+                {
+                    provide: FlightService,
+                    useFactory: () => {
+                        return new FlightServiceMock()
+                    }
+                    // You can also use 'useClass' instead of 'useFactory'
+                    //, useClass: MockFlightService
+                }, 
+                // Required for routermodule
+                {
+                    provide: APP_BASE_HREF,
+                    useValue: '/'
                 }
-                // You can also use 'useClass' instead of 'useFactory'
-                //, useClass: MockFlightService
-            }],
+            ],
 
             // Use if you want to do a shallow integration test
             //schemas: [NO_ERRORS_SCHEMA]
-            
+
         });
 
         // Create the ComponentFixture
@@ -58,9 +87,10 @@ describe('FlightListComponent', () => {
 
         // Access the actual component instance
         component = fixture.componentInstance;
+        
 
         // Retrieve the MockFlightService instance so we can spy on it
-        service = <FlightService> testBed.get(FlightService);
+        service = <FlightService>testBed.get(FlightService);
     }));
 
     it('should have 2 flights', () => {
@@ -112,7 +142,7 @@ describe('FlightListComponent', () => {
         component.enableBooking(flight.id);
 
         // Add the passenger to the flight
-        flight.addPassenger(passenger);
+        component.addPassenger(passenger, flight.id);
 
         fixture.detectChanges();
 
@@ -125,16 +155,16 @@ describe('FlightListComponent', () => {
     });
 
     // Example on how to inject and mock a service into a suite
-    describe('when flighservice returns 1 flight', () => {
+    describe('when FlightService returns 1 flight', () => {
         /**
          * Use the Angular inject method to inject the flightservice
          * but spy on the getFlights method and return a static value
          */
         beforeEach(inject([FlightService], (flightService: FlightService) => {
-            spyOn(flightService, 'getFlights').and.returnValue(
+            spyOn(flightService, 'getFlights').and.returnValue(Observable.of(
                 [
                     new Flight('Test-1234', 'TestFrom', 'TestTo', 250, AirplaneType.Boeing_737),
-                ])
+                ]))
         }));
 
         // Shows that the inject above is working by expecting just one flight

@@ -4,7 +4,7 @@
         <input class="form-control" id="search" type="text" [formControl]="searchInput">
     </div>
 
-    <ul class="list-group some-margin-top">
+    <ul class="list-group some-margin-top" *ngIf="flights">
         <li class="list-group-item" *ngFor="let flight of flights | search:searchValue">
             <!-- 
                 Structural directive will display the Delta flag if the flight is being
